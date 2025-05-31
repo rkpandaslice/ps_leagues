@@ -1,0 +1,1423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced League Configuration</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #fafafa;
+            min-height: 100vh;
+            color: #1a1a1a;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 32px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 16px;
+        }
+
+        /* Progress Section */
+        .progress-section {
+            background: #ffffff;
+            border: 1px solid #e5e5e5;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 32px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .progress-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .progress-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 4px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #f3f4f6;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 16px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #1a1a1a;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .progress-text {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* Configuration Sections */
+        .config-sections {
+            display: grid;
+            gap: 32px;
+        }
+
+        .config-section {
+            background: #ffffff;
+            border: 1px solid #e5e5e5;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .section-header {
+            padding: 24px;
+            border-bottom: 1px solid #e5e5e5;
+            background: #fafafa;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .section-icon {
+            width: 40px;
+            height: 40px;
+            background: #1a1a1a;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .section-body {
+            padding: 24px;
+        }
+
+        /* Configuration Grid */
+        .config-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+        }
+
+        .config-item {
+            background: #fafafa;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 20px;
+            transition: all 0.2s ease;
+        }
+
+        .config-item:hover {
+            border-color: #1a1a1a;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .config-item.featured {
+            background: #f9fafb;
+            border-color: #1a1a1a;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .item-content {
+            flex: 1;
+            margin-right: 16px;
+        }
+
+        .item-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 4px;
+        }
+
+        .item-description {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        /* Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            width: 52px;
+            height: 28px;
+            flex-shrink: 0;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #d1d5db;
+            border-radius: 28px;
+            transition: all 0.2s ease;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 3px;
+            bottom: 3px;
+            background: white;
+            border-radius: 50%;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        .toggle-switch input:checked + .toggle-slider {
+            background: #1a1a1a;
+        }
+
+        .toggle-switch input:checked + .toggle-slider:before {
+            transform: translateX(24px);
+        }
+
+        .toggle-status {
+            margin-top: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            padding: 4px 8px;
+            border-radius: 4px;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .toggle-status.enabled {
+            background: #f0fdf4;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+        }
+
+        .toggle-status.disabled {
+            background: #fef2f2;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+        }
+
+        /* Sub-options */
+        .sub-options {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid #e5e7eb;
+            opacity: 0.5;
+            pointer-events: none;
+            transition: all 0.2s ease;
+        }
+
+        .sub-options.enabled {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .sub-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .sub-option:last-child {
+            margin-bottom: 0;
+        }
+
+        .sub-option label {
+            font-size: 14px;
+            color: #374151;
+            font-weight: 500;
+        }
+
+        .form-input {
+            padding: 8px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 14px;
+            width: 100px;
+            transition: all 0.2s ease;
+            background: #ffffff;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #1a1a1a;
+            box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.05);
+        }
+
+        .form-select {
+            padding: 8px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 14px;
+            width: 140px;
+            background: #ffffff;
+            cursor: pointer;
+        }
+
+        .form-select:focus {
+            outline: none;
+            border-color: #1a1a1a;
+            box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.05);
+        }
+
+        /* Small toggle for sub-options */
+        .sub-option .toggle-switch {
+            width: 36px;
+            height: 20px;
+        }
+
+        .sub-option .toggle-slider:before {
+            height: 16px;
+            width: 16px;
+            left: 2px;
+            bottom: 2px;
+        }
+
+        .sub-option .toggle-switch input:checked + .toggle-slider:before {
+            transform: translateX(16px);
+        }
+
+        /* Action Buttons */
+        .action-section {
+            margin-top: 40px;
+            padding-top: 32px;
+            border-top: 1px solid #e5e5e5;
+            text-align: center;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background: #1a1a1a;
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background: #000000;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-secondary {
+            background: #ffffff;
+            color: #1a1a1a;
+            border: 1px solid #d1d5db;
+        }
+
+        .btn-secondary:hover {
+            background: #f9fafb;
+            border-color: #1a1a1a;
+            transform: translateY(-1px);
+        }
+
+        /* Messages */
+        .message {
+            padding: 16px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            max-width: 400px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .message-success {
+            background: #f0fdf4;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+        }
+
+        .message-error {
+            background: #fef2f2;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+        }
+
+        /* Status Indicators */
+        .status-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .status-indicator.active {
+            background: #16a34a;
+        }
+
+        .status-indicator.inactive {
+            background: #dc2626;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            .config-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .btn-group {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .sub-option {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+            .form-input,
+            .form-select {
+                width: 100%;
+                max-width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>League Configuration System</h1>
+            <p>Configure all aspects of your league with granular toggle controls</p>
+        </div>
+
+        <!-- Progress Section -->
+        <div class="progress-section">
+            <div class="progress-header">
+                <h3 class="progress-title">Configuration Progress</h3>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <p class="progress-text" id="progressText">
+                    <span class="status-indicator inactive"></span>
+                    <span id="enabledCount">0</span> of <span id="totalCount">0</span> features configured
+                </p>
+            </div>
+        </div>
+
+        <div class="config-sections">
+            <!-- Scheduling Configuration -->
+            <div class="config-section">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                        </svg>
+                    </div>
+                    <h2 class="section-title">Scheduling & Fixtures</h2>
+                </div>
+                
+                <div class="section-body">
+                    <div class="config-grid">
+                        <div class="config-item featured">
+                            <div class="item-header">
+                                <div class="item-content">
+                                    <h3 class="item-title">Automated Scheduling</h3>
+                                    <p class="item-description">System generates match schedules automatically based on league parameters</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="autoScheduling" onchange="updateToggle(this)">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="toggle-status disabled" id="autoScheduling-status">Disabled - Teams schedule manually</div>
+                            <div class="sub-options" id="autoScheduling-options">
+                                <div class="sub-option">
+                                    <label>Schedule Type:</label>
+                                    <select class="form-select">
+                                        <option>Round Robin</option>
+                                        <option>Double Round Robin</option>
+                                        <option>Tournament</option>
+                                        <option>Custom</option>
+                                    </select>
+                                </div>
+                                <div class="sub-option">
+                                    <label>Frequency:</label>
+                                    <select class="form-select">
+                                        <option>Weekly</option>
+                                        <option>Bi-weekly</option>
+                                        <option>Monthly</option>
+                                        <option>Custom</option>
+                                    </select>
+                                </div>
+                                <div class="sub-option">
+                                    <label>Start Time:</label>
+                                    <input type="time" class="form-input" value="18:00">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="config-item">
+                            <div class="item-header">
+                                <div class="item-content">
+                                    <h3 class="item-title">Ad-hoc Team Scheduling</h3>
+                                    <p class="item-description">Teams can propose and arrange matches independently</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="adhocScheduling" onchange="updateToggle(this)">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="toggle-status disabled" id="adhocScheduling-status">Disabled</div>
+                            <div class="sub-options" id="adhocScheduling-options">
+                                <div class="sub-option">
+                                    <label>Approval Required:</label>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="sub-option">
+                                    <label>Deadline (hours):</label>
+                                    <input type="number" class="form-input" placeholder="24" value="24">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="config-item">
+                            <div class="item-header">
+                                <div class="item-content">
+                                    <h3 class="item-title">Match Rescheduling</h3>
+                                    <p class="item-description">Allow teams to reschedule matches with conditions</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="rescheduling" onchange="updateToggle(this)">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="toggle-status disabled" id="rescheduling-status">Disabled</div>
+                            <div class="sub-options" id="rescheduling-options">
+                                <div class="sub-option">
+                                    <label>Max Reschedules:</label>
+                                    <input type="number" class="form-input" value="2" min="1" max="10">
+                                </div>
+                                <div class="sub-option">
+                                    <label>Notice Period (hours):</label>
+                                    <input type="number" class="form-input" placeholder="48" value="48">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="config-item">
+                            <div class="item-header">
+                                <div class="item-content">
+                                    <h3 class="item-title">Venue Management</h3>
+                                    <p class="item-description">Automatic venue assignment and booking management</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="venueManagement" onchange="updateToggle(this)">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="toggle-status disabled" id="venueManagement-status">Disabled</div>
+                            <div class="sub-options" id="venueManagement-options">
+                                <div class="sub-option">
+                                    <label>Auto-assign Venues:</label>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="sub-option">
+                                    <label>Calendar Integration:</label>
+                                    <select class="form-select">
+                                        <option>None</option>
+                                        <option>Google Calendar</option>
+                                        <option>Outlook</option>
+                                        <option>Custom API</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Team Management -->
+            <div class="config-section">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                    </div>
+                    <h2 class="section-title">Team & Player Management</h2>
+                </div>
+                
+                <div class="section-body">
+                    <div class="config-grid">
+                        <div class="config-item featured">
+                            <div class="item-header">
+                                <div class="item-content">
+                                    <h3 class="item-title">Team Registration</h3>
+                                    <p class="item-description">Control how teams can register and join the league</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="teamRegistration" onchange="updateToggle(this)">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="toggle-status disabled" id="teamRegistration-status">Disabled</div>
+                            <div class="sub-options" id="teamRegistration-options">
+                                <div class="sub-option">
+                                    <label>Registration Type:</label>
+                                    <select class="form-select">
+                                        <option>Open</option>
+                                        <option>Approval Required</option>
+                                        <option>Invitation Only</option>
+                                        <option>Closed</option>
+                                    </select>
+                                </div>
+                                <div class="sub-option">
+                                    <label>Max Teams:</label>
+                                    <input type="number" class="form-input" value="16" min="2" max="64">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="config-item">
+                            <div class="item-header">
+                                <div class="item-content">
+                                    <h3 class="item-title">Player Transfers</h3>
+                                    <p class="item-description">Allow players to move between teams during season</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="playerTransfers" onchange="updateToggle(this)">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="toggle-status disabled" id="playerTransfers-status">Disabled</div>
+                            <div class="sub-options" id="playerTransfers-options">
+                                <div class="sub-option">
+                                    <label>Transfer Window:</label>
+                                    <select class="form-select">
+                                        <option>Anytime</option>
+                                        <option>Mid-season Only</option>
+                                        <option>Pre-season Only</option>
+                                        <option>Custom Dates</option>
+                                    </select>
+                                </div>
+                                <div class="sub-option">
+                                    <label>Fee Required:</label>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="config-item">
+                            <div class="item-header">
+                                <div class="item-content">
+                                    <h3 class="item-title">Substitute Players</h3>
+                                    <p class="item-description">Allow teams to use substitute players during matches</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="substitutes" onchange="updateToggle(this)">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="toggle-status disabled" id="substitutes-status">Disabled</div>
+                            <div class="sub-options" id="substitutes-options">
+                                <div class="sub-option">
+                                    <label>Max Substitutes:</label>
+                                    <input type="number" class="form-input" value="3" min="1" max="10">
+                                </div>
+                                <div class="sub-option">
+                                    <label>Guest Players:</label>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="config-item">
+                            <div class="item-header">
+                                <div class="item-content">
+                                    <h3 class="item-title">Roster Limits</h3>
+                                    <p class="item-description">Set minimum and maximum team size requirements</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="rosterLimits" onchange="updateToggle(this)">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="toggle-status disabled" id="rosterLimits-status">Disabled</div>
+                            <div class="sub-options" id="rosterLimits-options">
+                                <div class="sub-option">
+                                    <label>Min Players:</label>
+                                    <input type="number" class="form-input" value="8" min="1">
+                                </div>
+                                <div class="sub-option">
+                                    <label>Max Players:</label>
+                                    <input type="number" class="form-input" value="15" min="1">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scoring & Statistics -->
+            <div class="config-section">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="18" y1="20" x2="18" y2="10"></line>
+                            <line x1="12" y1="20" x2="12" y2="4"></line>
+                            <line x1="6" y1="20" x2="6" y2="14"></line>
+                        </svg>
+                    </div>
+                    <h2 class="section-title">Scoring & Statistics</h2>
+                </div>
+                
+                <div class="section-body">
+                    <div class="config-grid">
+                        <div class="config-item featured">
+                            <div class="item-header">
+                                <div class="item-content">
+                                    <h3 class="item-title">Custom Scoring System</h3>
+                                    <p class="item-description">Define points for wins, draws, losses, and bonus points</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="customScoring" onchange="updateToggle(this)">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="toggle-status disabled" id="customScoring-status">Using default scoring</div>
+                            <div class="sub-options" id="customScoring-options">
+                                <div class="sub-option">
+                                    <label>Win Points:</label>
+                                    <input type="number" class="form-input" value="3" min="0">
+                                </div>
+                                <div class="sub-option">
+                                    <label>Draw Points:</label>
+                                    <input type="number" class="form-input" value="1" min="0">
+                                </div>
+                                <div class="sub-option">
+                                    <label>Loss Points:</label>
+                                    <input type="number" class="form-input" value="0" min="0">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="config-item">
+                            <div class="item-header">
+                                <div class="item-content">
+                                    <h3 class="item-title">Live Score Updates</h3>
+                                    <p class="item-description">Teams can update scores in real-time during matches</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="liveScores" onchange="updateToggle(this)">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="toggle-status disabled" id="liveScores-status">Disabled</div>
+                            <div class="sub-options" id="liveScores-options">
+                                <div class="sub-option">
+                                    <label>Both Teams Required:</label>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="sub-option">
+                                    <label>Auto-publish:</label>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="config-item">
+                            <div class="item-header">
+                                <div class="item-content">
+                                    <h3 class="item-title">Player Statistics</h3>
+                                    <p class="item-description">Track individual player performance and statistics</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="playerStats" onchange="updateToggle(this)">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="toggle-status disabled" id="playerStats-status">Disabled</div>
+                            <div class="sub-options" id="playerStats-options">
+                                <div class="sub-option">
+                                    <label>Track Goals/Points:</label>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="sub-option">
+                                    <label>Track Assists:</label>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="sub-option">
+                                    <label>Track Attendance:</label>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="config-item">
+                            <div class="item-header">
+                                <div class="item-content">
+                                    <h3 class="item-title">Tiebreaker Rules</h3>
+                                    <p class="item-description">Define how ties in standings are resolved</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="tiebreakers" onchange="updateToggle(this)">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="toggle-status disabled" id="tiebreakers-status">Using default rules</div>
+                            <div class="sub-options" id="tiebreakers-options">
+                                <div class="sub-option">
+                                    <label>Primary:</label>
+                                    <select class="form-select">
+                                        <option>Head-to-head</option>
+                                        <option>Goal Difference</option>
+                                        <option>Goals For</option>
+                                        <option>Games Played</option>
+                                    </select>
+                                </div>
+                                <div class="sub-option">
+                                    <label>Secondary:</label>
+                                    <select class="form-select">
+                                        <option>Goal Difference</option>
+                                        <option>Goals For</option>
+                                        <option>Head-to-head</option>
+                                        <option>Random</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Communication & Notifications -->
+            <div class="config-section">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                    </div>
+                    <h2 class="section-title">Communication & Notifications</h2>
+                </div>
+                
+                <div class="section-body">
+                    <div class="config-grid">
+                        <div class="config-item featured">
+                            <div class="item-header">
+                                <div class="item-content">
+                                    <h3 class="item-title">Email Notifications</h3>
+                                    <p class="item-description">Automatic email updates for matches, scores, and league news</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="emailNotifications" onchange="updateToggle(this)">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="toggle-status disabled" id="emailNotifications-status">Disabled</div>
+                            <div class="sub-options" id="emailNotifications-options">
+                                <div class="sub-option">
+                                    <label>Match Reminders:</label>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="sub-option">
+                                    <label>Score Updates:</label>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="sub-option">
+                                    <label>Reminder Hours:</label>
+                                    <input type="number" class="form-input" value="24" min="1" max="168">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="config-item">
+                            <div class="item-header">
+                                <div class="item-content">
+                                    <h3 class="item-title">SMS Notifications</h3>
+                                    <p class="item-description">Send text message updates to team contacts</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="smsNotifications" onchange="updateToggle(this)">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="toggle-status disabled" id="smsNotifications-status">Disabled</div>
+                            <div class="sub-options" id="smsNotifications-options">
+                                <div class="sub-option">
+                                    <label>Urgent Only:</label>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="sub-option">
+                                    <label>Cost per SMS:</label>
+                                    <input type="text" class="form-input" value="$0.05" readonly>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="config-item">
+                            <div class="item-header">
+                                <div class="item-content">
+                                    <h3 class="item-title">Team Communication</h3>
+                                    <p class="item-description">Enable team chat and messaging features</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="teamComms" onchange="updateToggle(this)">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="toggle-status disabled" id="teamComms-status">Disabled</div>
+                            <div class="sub-options" id="teamComms-options">
+                                <div class="sub-option">
+                                    <label>Public Team Chat:</label>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="sub-option">
+                                    <label>Private Messaging:</label>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="config-item">
+                            <div class="item-header">
+                                <div class="item-content">
+                                    <h3 class="item-title">League Announcements</h3>
+                                    <p class="item-description">Broadcast important league-wide announcements</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="announcements" onchange="updateToggle(this)">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="toggle-status disabled" id="announcements-status">Disabled</div>
+                            <div class="sub-options" id="announcements-options">
+                                <div class="sub-option">
+                                    <label>Admin Only:</label>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="sub-option">
+                                    <label>Auto-archive Days:</label>
+                                    <input type="number" class="form-input" value="30" min="1" max="365">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Financial Management -->
+            <div class="config-section">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="1" x2="12" y2="23"></line>
+                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                        </svg>
+                    </div>
+                    <h2 class="section-title">Financial Management</h2>
+                </div>
+                
+                <div class="section-body">
+                    <div class="config-grid">
+                        <div class="config-item featured">
+                            <div class="item-header">
+                                <div class="item-content">
+                                    <h3 class="item-title">Registration Fees</h3>
+                                    <p class="item-description">Collect team registration and participation fees</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="registrationFees" onchange="updateToggle(this)">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="toggle-status disabled" id="registrationFees-status">Free registration</div>
+                            <div class="sub-options" id="registrationFees-options">
+                                <div class="sub-option">
+                                    <label>Team Fee:</label>
+                                    <input type="number" class="form-input" value="100" min="0" step="5">
+                                </div>
+                                <div class="sub-option">
+                                    <label>Payment Method:</label>
+                                    <select class="form-select">
+                                        <option>Stripe</option>
+                                        <option>PayPal</option>
+                                        <option>Bank Transfer</option>
+                                        <option>Cash</option>
+                                    </select>
+                                </div>
+                                <div class="sub-option">
+                                    <label>Late Fee:</label>
+                                    <input type="number" class="form-input" value="25" min="0" step="5">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="config-item">
+                            <div class="item-header">
+                                <div class="item-content">
+                                    <h3 class="item-title">Match Fees</h3>
+                                    <p class="item-description">Collect fees for individual matches or court usage</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="matchFees" onchange="updateToggle(this)">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="toggle-status disabled" id="matchFees-status">No match fees</div>
+                            <div class="sub-options" id="matchFees-options">
+                                <div class="sub-option">
+                                    <label>Fee per Match:</label>
+                                    <input type="number" class="form-input" value="20" min="0" step="5">
+                                </div>
+                                <div class="sub-option">
+                                    <label>Split Between Teams:</label>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="config-item">
+                            <div class="item-header">
+                                <div class="item-content">
+                                    <h3 class="item-title">Prize Pool</h3>
+                                    <p class="item-description">Create and manage prize pools for league winners</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="prizePool" onchange="updateToggle(this)">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="toggle-status disabled" id="prizePool-status">No prizes</div>
+                            <div class="sub-options" id="prizePool-options">
+                                <div class="sub-option">
+                                    <label>1st Place:</label>
+                                    <input type="number" class="form-input" value="500" min="0" step="25">
+                                </div>
+                                <div class="sub-option">
+                                    <label>2nd Place:</label>
+                                    <input type="number" class="form-input" value="300" min="0" step="25">
+                                </div>
+                                <div class="sub-option">
+                                    <label>3rd Place:</label>
+                                    <input type="number" class="form-input" value="200" min="0" step="25">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="config-item">
+                            <div class="item-header">
+                                <div class="item-content">
+                                    <h3 class="item-title">Financial Reporting</h3>
+                                    <p class="item-description">Generate financial reports and transparency</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="financialReporting" onchange="updateToggle(this)">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="toggle-status disabled" id="financialReporting-status">No reporting</div>
+                            <div class="sub-options" id="financialReporting-options">
+                                <div class="sub-option">
+                                    <label>Public Transparency:</label>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="sub-option">
+                                    <label>Monthly Reports:</label>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Section -->
+        <div class="action-section">
+            <div class="btn-group">
+                <button class="btn btn-primary" onclick="saveConfiguration()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                        <polyline points="17,21 17,13 7,13 7,21"></polyline>
+                        <polyline points="7,3 7,8 15,8"></polyline>
+                    </svg>
+                    Save Configuration
+                </button>
+                <button class="btn btn-secondary" onclick="previewConfiguration()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                    Preview League
+                </button>
+                <button class="btn btn-secondary" onclick="exportConfiguration()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7,10 12,15 17,10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    Export Config
+                </button>
+                <button class="btn btn-secondary" onclick="resetConfiguration()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="1,4 1,10 7,10"></polyline>
+                        <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+                    </svg>
+                    Reset All
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global configuration state
+        let configurationState = {
+            enabled: new Set(),
+            settings: {}
+        };
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            updateProgress();
+            initializeToggles();
+        });
+
+        function initializeToggles() {
+            // Get all toggle switches and count them
+            const toggles = document.querySelectorAll('input[type="checkbox"][id]');
+            document.getElementById('totalCount').textContent = toggles.length;
+        }
+
+        function updateToggle(toggleElement) {
+            const toggleId = toggleElement.id;
+            const isEnabled = toggleElement.checked;
+            const statusElement = document.getElementById(toggleId + '-status');
+            const optionsElement = document.getElementById(toggleId + '-options');
+
+            // Update status display
+            if (statusElement) {
+                statusElement.className = `toggle-status ${isEnabled ? 'enabled' : 'disabled'}`;
+                
+                // Update status text based on toggle
+                const statusTexts = {
+                    'autoScheduling': isEnabled ? 'Enabled - System scheduling active' : 'Disabled - Teams schedule manually',
+                    'adhocScheduling': isEnabled ? 'Enabled - Teams can self-schedule' : 'Disabled',
+                    'rescheduling': isEnabled ? 'Enabled - Teams can reschedule' : 'Disabled',
+                    'venueManagement': isEnabled ? 'Enabled - Automatic venue assignment' : 'Disabled',
+                    'teamRegistration': isEnabled ? 'Enabled - Teams can register' : 'Disabled',
+                    'playerTransfers': isEnabled ? 'Enabled - Player transfers allowed' : 'Disabled',
+                    'substitutes': isEnabled ? 'Enabled - Substitutes allowed' : 'Disabled',
+                    'rosterLimits': isEnabled ? 'Enabled - Roster size enforced' : 'Disabled',
+                    'customScoring': isEnabled ? 'Custom scoring system active' : 'Using default scoring',
+                    'liveScores': isEnabled ? 'Enabled - Real-time score updates' : 'Disabled',
+                    'playerStats': isEnabled ? 'Enabled - Tracking player statistics' : 'Disabled',
+                    'tiebreakers': isEnabled ? 'Custom tiebreaker rules active' : 'Using default rules',
+                    'emailNotifications': isEnabled ? 'Enabled - Email notifications active' : 'Disabled',
+                    'smsNotifications': isEnabled ? 'Enabled - SMS notifications active' : 'Disabled',
+                    'teamComms': isEnabled ? 'Enabled - Team communication active' : 'Disabled',
+                    'announcements': isEnabled ? 'Enabled - League announcements active' : 'Disabled',
+                    'registrationFees': isEnabled ? 'Fee collection enabled' : 'Free registration',
+                    'matchFees': isEnabled ? 'Match fees enabled' : 'No match fees',
+                    'prizePool': isEnabled ? 'Prize pool active' : 'No prizes',
+                    'financialReporting': isEnabled ? 'Financial reporting enabled' : 'No reporting'
+                };
+
+                statusElement.textContent = statusTexts[toggleId] || (isEnabled ? 'Enabled' : 'Disabled');
+            }
+
+            // Enable/disable sub-options
+            if (optionsElement) {
+                optionsElement.className = `sub-options ${isEnabled ? 'enabled' : ''}`;
+            }
+
+            // Update configuration state
+            if (isEnabled) {
+                configurationState.enabled.add(toggleId);
+            } else {
+                configurationState.enabled.delete(toggleId);
+            }
+
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const totalToggles = document.querySelectorAll('input[type="checkbox"][id]').length;
+            const enabledCount = configurationState.enabled.size;
+            const percentage = Math.round((enabledCount / totalToggles) * 100);
+
+            // Update progress bar
+            document.getElementById('progressFill').style.width = percentage + '%';
+            document.getElementById('enabledCount').textContent = enabledCount;
+            document.getElementById('totalCount').textContent = totalToggles;
+
+            // Update status indicator
+            const statusIndicator = document.querySelector('.status-indicator');
+            if (enabledCount > 0) {
+                statusIndicator.className = 'status-indicator active';
+            } else {
+                statusIndicator.className = 'status-indicator inactive';
+            }
+
+            // Update progress text
+            let progressMessage = `${percentage}% Complete`;
+            if (percentage === 0) {
+                progressMessage += ' - No features configured';
+            } else if (percentage < 25) {
+                progressMessage += ' - Basic setup';
+            } else if (percentage < 50) {
+                progressMessage += ' - Good progress';
+            } else if (percentage < 75) {
+                progressMessage += ' - Well configured';
+            } else if (percentage < 100) {
+                progressMessage += ' - Almost complete';
+            } else {
+                progressMessage += ' - Fully configured';
+            }
+
+            document.getElementById('progressText').innerHTML = `
+                <span class="status-indicator ${enabledCount > 0 ? 'active' : 'inactive'}"></span>
+                ${progressMessage} - <span id="enabledCount">${enabledCount}</span> of <span id="totalCount">${totalToggles}</span> features configured
+            `;
+        }
+
+        function saveConfiguration() {
+            // Collect all configuration data
+            const config = {
+                enabled: Array.from(configurationState.enabled),
+                settings: {},
+                timestamp: new Date().toISOString()
+            };
+
+            // Collect form values for enabled features
+            configurationState.enabled.forEach(featureId => {
+                const optionsContainer = document.getElementById(featureId + '-options');
+                if (optionsContainer) {
+                    const feature = {};
+                    
+                    // Collect input values
+                    optionsContainer.querySelectorAll('input, select').forEach(input => {
+                        if (input.type === 'checkbox') {
+                            feature[input.closest('.sub-option').querySelector('label').textContent.trim()] = input.checked;
+                        } else {
+                            feature[input.closest('.sub-option').querySelector('label').textContent.trim()] = input.value;
+                        }
+                    });
+                    
+                    config.settings[featureId] = feature;
+                }
+            });
+
+            // Simulate saving (in real app, this would be an API call)
+            showMessage('Configuration saved successfully!', 'success');
+            
+            // Log configuration for debugging
+            console.log('Saved Configuration:', config);
+        }
+
+        function previewConfiguration() {
+            const enabledFeatures = Array.from(configurationState.enabled);
+            if (enabledFeatures.length === 0) {
+                showMessage('No features configured to preview', 'error');
+                return;
+            }
+
+            // Simulate preview generation
+            showMessage(`Generating preview for ${enabledFeatures.length} configured features...`, 'success');
+            
+            // In a real app, this would navigate to a preview page
+            setTimeout(() => {
+                console.log('Preview would show:', enabledFeatures);
+            }, 1000);
+        }
+
+        function exportConfiguration() {
+            const config = {
+                enabled: Array.from(configurationState.enabled),
+                timestamp: new Date().toISOString(),
+                version: '1.0'
+            };
+
+            const dataStr = JSON.stringify(config, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'league-configuration.json';
+            link.click();
+            
+            URL.revokeObjectURL(url);
+            showMessage('Configuration exported successfully!', 'success');
+        }
+
+        function resetConfiguration() {
+            if (confirm('Are you sure you want to reset all configuration settings? This cannot be undone.')) {
+                // Reset all toggles
+                document.querySelectorAll('input[type="checkbox"][id]').forEach(toggle => {
+                    toggle.checked = false;
+                    updateToggle(toggle);
+                });
+
+                // Clear configuration state
+                configurationState.enabled.clear();
+                configurationState.settings = {};
+
+                updateProgress();
+                showMessage('Configuration reset successfully!', 'success');
+            }
+        }
+
+        function showMessage(message, type) {
+            // Remove existing messages
+            document.querySelectorAll('.message').forEach(el => el.remove());
+
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message message-${type}`;
+            messageDiv.textContent = message;
+
+            document.body.appendChild(messageDiv);
+
+            setTimeout(() => {
+                messageDiv.remove();
+            }, 4000);
+        }
+    </script>
+</body>
+</html>
